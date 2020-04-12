@@ -47,8 +47,6 @@ var clearDiv =function(targetDiv){
     //clears the div passed to it.
 }
 
-
-
 var printQ=function(qpara,ans0, ans1,ans2,ans3){
     var pagehero = document.querySelector('#testHero');
     questionMess =document.createElement('p');
@@ -74,6 +72,7 @@ var printQ=function(qpara,ans0, ans1,ans2,ans3){
     abtn3.setAttribute('id','id3');
     abtn3.setAttribute('class','answerbutton')
     pagehero.appendChild(abtn3);
+    
 }
 
 
@@ -109,6 +108,7 @@ var endTest = function(){
 }
 
 var corA = function(){
+    clearDiv(pagefoot);
     var answerOut = document.createElement('h2');
     answerOut.textContent='Correct';
     pagefoot.appendChild(answerOut);
@@ -116,6 +116,7 @@ var corA = function(){
 }
 
 var wrongA = function(){
+    clearDiv(pagefoot);
     var answerOut = document.createElement('h2');
     answerOut.textContent='Incorrect';
     pagefoot.appendChild(answerOut);
@@ -169,20 +170,25 @@ var displayInitials = function(){
         
         initials = tempdata.slice();
         for (i=0;i<initials.length;i++){
-           var templi= document.createElement('li');
+           var templi= document.createElement('p');
+           templi.className='users';
            templi.textContent = initials[i].initials;
-           console.log (templi);
-           console.log (heroul);
-           heroul.appendChild(templi);
+           
+           pagehero.appendChild(templi);
             
         }
     }
     else {
+        console.log('fired');
         var errormes = document.createElement('h2');
-        errormes.textConent ='No saved initials in localstorage.';
+        errormes.textContent ='No saved initials in localstorage.';
+        console.log (errormes);
         pagehero.appendChild(errormes);
         
     }
+    var promptUse = document.createElement('p');
+    promptUse .textContent='Hit Start to play again.'
+    pagehero.appendChild(promptUse);
     var startBtn =document.createElement("BUTTON");
     startBtn.textContent= 'Start';
     startBtn.className='startButton';
@@ -220,7 +226,7 @@ var heroEvents= function(){
         clearDiv(pagehero);
         qnum=0;
         correctA=0;
-        setTimeout(endTest,5000);
+        setTimeout(endTest,10000);
         printQ(questions[qnum].q,questions[qnum].a0,questions[qnum].a1,questions[qnum].a2,questions[qnum].a3);
     }
    //every time a answerbutton is clicked print a new question.  
