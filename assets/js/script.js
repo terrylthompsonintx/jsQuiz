@@ -1,16 +1,16 @@
 // On page load script loads initial screen and start button.  
 // On start first question is loaded and timer starts.
 // Questions are an array of objects  {q:'', a0:'', a1:'',a2: '', a3:'',ca:<correct answer num>}
-// Once user selects an answer the script checks the selected answer agains the correct answer.  
+// Once user selects an answer the script checks the selected answer against the correct answer.  
 // The answer is correct, correct answer counter is incremented.  
 // If the answer is incorrect, timer is decremented. 
 // if all questions are answered user is prompted for initials.   
 // if timer runs out user is prompted for initials.  
-// initials, answers and time are saved to localstorage
+// initials and number of correct answers are saved to localstorage
 
 
 
-// event listeners - start, a0, a1,a2,a3, view high scores
+
 
 //Global Variables
 var pagehead = document.querySelector('#testHead');
@@ -25,6 +25,8 @@ var a=0;
 var questions =[{q:'What is the color of the sky?',a0:'blue',a1:'green',a2:'yellow',a3:'red',c:'id0'},{q:'What is the color of the grass?',a0:'blue',a1:'green',a2:'yellow',a3:'red',c:'id1'},{q:'What is the color of the banana?',a0:'blue',a1:'green',a2:'yellow',a3:'red',c:'id2'}];
 var qnum =0;
 var initials =[];
+var timeCount =60;
+var doom = 0;
 
 //End global variables
 
@@ -104,7 +106,9 @@ var endTest = function(){
     startBtn.className='startButton';
     startBtn.setAttribute('id','testStartBtn');
     pagehero.appendChild (startBtn);
-    //Append to localStorage ?
+    clearDiv(pagefoot);
+    clearInterval(doom);
+ 
 }
 
 var corA = function(){
@@ -118,8 +122,9 @@ var corA = function(){
 var wrongA = function(){
     clearDiv(pagefoot);
     var answerOut = document.createElement('h2');
-    answerOut.textContent='Incorrect';
+    answerOut.textContent='Incorrect, 10 seconds deducted.';
     pagefoot.appendChild(answerOut);
+    timeCount = timeCount -10;
 }
 
 var testq = function(){
@@ -157,12 +162,7 @@ var saveInitials = function() {
 
     localStorage.setItem('userinits',JSON.stringify(initials));
 
-    
-
-   
-
-    
-  }
+}
 var displayInitials = function(){
     var tempdata =JSON.parse(localStorage.getItem('userinits'));
     clearDiv(pagehero);
@@ -200,21 +200,14 @@ var displayInitials = function(){
 
 
 
-function startTimer(duration, display) {
-    var timer = duration, minutes, seconds;
-    setInterval(function () {
-        minutes = parseInt(timer / 60, 10);
-        seconds = parseInt(timer % 60, 10);
+var update =function(){
+    timeCount--;
+     document.getElementById('timerCount').textContent=timeCount;
+     if (timeCount<=0){
+        endTest()
+        clearInterval(doom);
+     }
 
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-
-        display.textContent = minutes + ":" + seconds;
-
-        if (--timer < 0) {
-            timer = duration;
-        }
-    }, 1000);
 }
 // Event handlers
 
@@ -226,10 +219,11 @@ var heroEvents= function(){
         clearDiv(pagehero);
         qnum=0;
         correctA=0;
-        setTimeout(endTest,10000);
+        timeCount=20;
+        doom =setInterval(update,1000);
         printQ(questions[qnum].q,questions[qnum].a0,questions[qnum].a1,questions[qnum].a2,questions[qnum].a3);
     }
-   //every time a answerbutton is clicked print a new question.  
+   
    
    if (event.target.matches("#id0")){
        testq();
