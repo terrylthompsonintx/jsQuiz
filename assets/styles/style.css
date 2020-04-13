@@ -46,3 +46,9 @@
 .button {
     border-radius: 50px;
 }
+.answerbutton {
+    width:100px;
+}
+#savebox{
+    background-color: var(--main-bg-color);
+}
