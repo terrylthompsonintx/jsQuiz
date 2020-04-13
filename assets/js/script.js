@@ -12,7 +12,7 @@
 
 
 
-//Global Variables
+//Global Variables begin//
 var pagehead = document.querySelector('#testHead');
 var pagehero = document.querySelector('#testHero');
 var pagefoot = document.querySelector('#testFoot');
@@ -22,20 +22,20 @@ var heroul = document.querySelector('#displayInit');
 var timerDisplay = 0;
 var correctA = 0;
 var a=0;
-var questions =[{q:'What is the color of the sky?',a0:'blue',a1:'green',a2:'yellow',a3:'red',c:'id0'},{q:'What is the color of the grass?',a0:'blue',a1:'green',a2:'yellow',a3:'red',c:'id1'},{q:'What is the color of the banana?',a0:'blue',a1:'green',a2:'yellow',a3:'red',c:'id2'}];
+var questions =[{q:'What JavaScipt method concatenates two strings?',a0:'concat()',a1:'cat()',a2:'cString()',a3:'toString()',c:'id0'},{q:'What JavaScipt property tells you an elements length ?',a0:'.len',a1:'.length',a2:'indexif',a3:'.match',c:'id1'},{q:'What JavaScipt method can be used to replace a work in a string?',a0:'blue',a1:'repeat',a2:'replace()',a3:'search()',c:'id2'},{q:'What JavaScipt method extracts part of a sting?',a0:'match()',a1:'search()',a2:'slice()',a3:'Startswith()',c:'id2'},{q:'What JavaScipt method converts a string to uppercase?',a0:'UPPER!',a1:'Upper()',a2:'toUpper()',a3:'upper()',c:'id2'}];
 var qnum =0;
 var initials =[];
 var timeCount =60;
 var doom = 0;
-
 //End global variables
 
+//functions begin//
 var pageloader = function(){
     var heroLabel = document.createElement('H1');
     heroLabel.textContent='Coding Quiz Challenge';
     pagehero.appendChild(heroLabel);
     var startText = document.createElement('p');
-    startText.textContent='Try to answer code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by tens seconds!';
+    startText.textContent='Try to answer code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!';
     pagehero.appendChild(startText)
     var startBtn =document.createElement("BUTTON");
     startBtn.textContent= 'Start';
@@ -76,7 +76,6 @@ var printQ=function(qpara,ans0, ans1,ans2,ans3){
     pagehero.appendChild(abtn3);
     
 }
-
 
 var endTest = function(){
     clearDiv(pagehero);
@@ -163,6 +162,7 @@ var saveInitials = function() {
     localStorage.setItem('userinits',JSON.stringify(initials));
 
 }
+
 var displayInitials = function(){
     var tempdata =JSON.parse(localStorage.getItem('userinits'));
     clearDiv(pagehero);
@@ -198,20 +198,20 @@ var displayInitials = function(){
 
 }
 
-
-
 var update =function(){
     timeCount--;
-     document.getElementById('timerCount').textContent=timeCount;
+    var displaytxt = 'Time Remaining: ';
+    displaytxt = displaytxt.concat(timeCount.toString());
+     document.getElementById('timerCount').textContent=displaytxt;
      if (timeCount<=0){
         endTest()
         clearInterval(doom);
      }
 
 }
-// Event handlers
+//functions end//
 
-
+// Event handlers begin//
 var heroEvents= function(){
     
     if (event.target.matches("#testStartBtn")) {
@@ -219,7 +219,7 @@ var heroEvents= function(){
         clearDiv(pagehero);
         qnum=0;
         correctA=0;
-        timeCount=20;
+        timeCount=60;
         doom =setInterval(update,1000);
         printQ(questions[qnum].q,questions[qnum].a0,questions[qnum].a1,questions[qnum].a2,questions[qnum].a3);
     }
@@ -256,14 +256,13 @@ var headEvents= function(){
         
     }
 }
+// Event handlers end//
 
 
 pageloader();
 
-
-
-//event listeners 
+//event listeners begin//
 pagehero.addEventListener('click',heroEvents);
 pagehead.addEventListener('click',headEvents);
-//pagestart.addEventListener('click',starter);
+//event listeners begin//
 

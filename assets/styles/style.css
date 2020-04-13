@@ -10,14 +10,17 @@
     padding: 5px;
     margin: 0px;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 16px;
+    font-size: 20px;
+    background-color: var(--header-footer-bg-color);
+    color: var(--main-font-color);
 }
 .head {
     display:flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: wrap;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
+   
 
 }
 
@@ -36,5 +39,10 @@
     flex-wrap: wrap;
     justify-content: flex-end;
     align-items: center;
+    
 
+}
+
+.button {
+    border-radius: 50px;
 }
