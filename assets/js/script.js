@@ -169,10 +169,14 @@ var displayInitials = function(){
     if (tempdata != null){
         
         initials = tempdata.slice();
+        
         for (i=0;i<initials.length;i++){
            var templi= document.createElement('p');
            templi.className='users';
-           templi.textContent = initials[i].initials;
+           var score = initials[i].score;
+           score += ': ';
+           score += initials[i].initials;
+           templi.textContent = score;
            
            pagehero.appendChild(templi);
             
